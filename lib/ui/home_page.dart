@@ -70,27 +70,30 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
-          Expanded(child: FutureBuilder(
-            future: _getGifs(),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                case ConnectionState.none:
-                  return Container(
-                    width: 200.0,
-                    height: 200.0,
-                    alignment: Alignment.center,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      strokeWidth: 5.0,
-                    ),
-                  );
-                default:
-                  if(snapshot.hasError) return Container();
-                  else return _createGifTable(context, snapshot);
-              }
-            }
-          ),
+          Expanded(
+            child: FutureBuilder(
+                future: _getGifs(),
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                    case ConnectionState.none:
+                      return Container(
+                        width: 200.0,
+                        height: 200.0,
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                          strokeWidth: 5.0,
+                        ),
+                      );
+                    default:
+                      if (snapshot.hasError)
+                        return Container();
+                      else
+                        return _createGifTable(context, snapshot);
+                  }
+                }),
           ),
         ],
       ),
@@ -98,7 +101,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   int _getCount(List data) {
-    if(_search == null) {
+    if (_search == null) {
       return data.length;
     } else {
       return data.length + 1;
@@ -115,21 +118,25 @@ class _HomePageState extends State<HomePage> {
       ),
       itemCount: _getCount(snapshot.data["data"]),
       itemBuilder: (context, index) {
-        if(_search == null || index < snapshot.data["data"].length)
+        if (_search == null || index < snapshot.data["data"].length)
           return GestureDetector(
             child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage, 
-                image: snapshot.data["data"][index]["images"]["fixed_height"]["url"],
-                height: 300.0,
-                fit: BoxFit.cover,
+              placeholder: kTransparentImage,
+              image: snapshot.data["data"][index]["images"]["fixed_height"]
+                  ["url"],
+              height: 300.0,
+              fit: BoxFit.cover,
             ),
             onTap: () {
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => GifPage(snapshot.data["data"][index]))
-              );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          GifPage(snapshot.data["data"][index])));
             },
             onLongPress: () {
-              Share.share(snapshot.data["data"][index]["images"]["fixed_height"]["url"]);
+              Share.share(snapshot.data["data"][index]["images"]["fixed_height"]
+                  ["url"]);
             },
           );
         else
@@ -138,9 +145,18 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(Icons.add, color: Colors.white, size: 70.0,),
-                  Text("Carregar mais...", 
-                    style: TextStyle(color: Colors.white, fontSize: 22.0,),),
+                  Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 70.0,
+                  ),
+                  Text(
+                    "Carregar mais...",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22.0,
+                    ),
+                  ),
                 ],
               ),
               onTap: () {
