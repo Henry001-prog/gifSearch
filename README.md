@@ -1,7 +1,7 @@
 <h1 align="center">GIF search and display application</h1>
 
 <p align="center">
-  <img class="display: block, margin: 0 auto" src="/photos/gif_search.gif" height="740" width="350"/>
+  <img src="/photos/gif_search.gif" height="740" width="350"/>
 </p>
 
 <h3 align="center">
